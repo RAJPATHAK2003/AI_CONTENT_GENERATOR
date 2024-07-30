@@ -72,14 +72,14 @@ const login = asyncHandler(async (req, res) => {
 
     // Respond with user details if authentication is successful
     //JWT token
-    const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{
+    const token=jwt.sign({id:user._id},'6d36ch',{
         expiresIn:'3d'
     })
     
     // set token inside the cookie
     res.cookie('token',token,{
         httpOnly:true,
-        secure:process.env.NODE_ENV==='production',
+        secure:'development'==='production',
         sameSite:'strict',
         maxAge:24 *60*60*1000  //1 day till cookie is stored
     })

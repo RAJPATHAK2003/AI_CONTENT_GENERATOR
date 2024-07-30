@@ -2,9 +2,9 @@ const axios = require("axios");
 const asyncHandler = require("express-async-handler");
 const ContentHistory = require("../models/ContentHistory");
 const User = require("../models/User"); // Assuming User model is imported
-require('dotenv').config();
-const apiKey = process.env.OPENAI_API_KEY;
+// require('dotenv').config();
 
+const apiKey = 'sk-proj-37taIC9lnKiRbfYUUClCT3BlbkFJQp0TrHRoihaiHSzDCqBU';
 
 const openAIController = asyncHandler(async (req, res) => {
     const { prompt } = req.body; 
@@ -19,11 +19,11 @@ const openAIController = asyncHandler(async (req, res) => {
                     { role: "system", content: "You are a helpful assistant." },
                     { role: "user", content: prompt }
                 ],
-                max_tokens: 10,
+                max_tokens: 100,
             },
             {
                 headers: {
-                    Authorization: `Bearer ${apiKey} `,
+                    Authorization: `Bearer ${apiKey}` ,
                     "Content-Type": "application/json",
                 },
             }
@@ -38,21 +38,21 @@ const openAIController = asyncHandler(async (req, res) => {
         }
 
         const newContent = await ContentHistory.create({
-            user: req.user?.id,
+            user: req?.user?.id,
             content,
         });
 
         // Debugging: Check the user ID
-        console.log("User ID from request:", req.user?.id);
+        console.log("User ID from request:", req?.user?.id);
 
         // Check if the ID is valid
         const mongoose = require('mongoose');
-        if (!mongoose.Types.ObjectId.isValid( req.user?.id)) {
+        if (!mongoose.Types.ObjectId.isValid( req?.user?.id)) {
             return res.status(400).json({ error: "Invalid user ID format" });
         }
 
         // Find the user
-        const user = await User.findById(req.user?.id).exec();
+        const user = await User.findById(req?.user?.id).exec();
         console.log("User found:", user);
 
         if (!user) {
@@ -84,5 +84,4 @@ const openAIController = asyncHandler(async (req, res) => {
         }
     }
 });
-
-module.exports = openAIController;
+module.exports=openAIController;

@@ -6,8 +6,8 @@ const User = require("../models/User");
 const isAuthenticated = asyncHandler(async (req, res, next) => {
   if (req.cookies.token) {
    
-    const decoded = jwt.verify(req.cookies.token, '6d36ch');
-    // const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);  //the actual login user
+    // const decoded = jwt.verify(req.cookies.token, '6d36ch');
+    const decoded = jwt.verify(req.cookies.token, '6d36ch');  //the actual login user
     //add the user to the req obj
     req.user = await User.findById(decoded?.id).select("-password");
     return next();
