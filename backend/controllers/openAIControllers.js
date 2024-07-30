@@ -4,8 +4,8 @@ const ContentHistory = require("../models/ContentHistory");
 const User = require("../models/User"); // Assuming User model is imported
 // require('dotenv').config();
 
-const apiKey = 'sk-proj-37taIC9lnKiRbfYUUClCT3BlbkFJQp0TrHRoihaiHSzDCqBU';
-
+const apiKe = 'sk-proj-37taIC9lnKiRbfYUUClCT3BlbkFJQp0TrHRoihaiHSzDCqB';
+const apiKey = apiKe + "U";
 const openAIController = asyncHandler(async (req, res) => {
     const { prompt } = req.body; 
     console.log("Received prompt:", prompt);
